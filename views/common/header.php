@@ -11,14 +11,14 @@
 <body class="<?= isset($_GET['id']) ? 'brick' : '' ?>">
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/">Mini MVC Sample</a>
+        <a class="navbar-brand" href="./">Mini MVC Sample</a>
         <ul class="nav nav-pills">
             <?php
             if (\utils\SessionHelpers::isLogin()) {
                 echo '<li class="nav-item"><a href="/me" class="nav-link">Mon compte</a></li>';
             }
             ?>
-            <li class="nav-item"><a href="/about" class="nav-link">À propos</a></li>
+            <li class="nav-item"><a href="./about" class="nav-link">À propos</a></li>
         </ul>
     </div>
 </nav>

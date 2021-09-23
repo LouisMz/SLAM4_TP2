@@ -12,4 +12,11 @@ class SampleWeb extends Web
         include("views/global/home.php");
         $this->footer();
     }
+
+    function about()
+    {
+        $this->header();
+        include("views/global/about.php");
+        $this->footer();
+    }
 }
