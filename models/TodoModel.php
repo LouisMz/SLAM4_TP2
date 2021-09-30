@@ -21,5 +21,11 @@ class TodoModel extends SQL
         $stmt = $this->pdo->prepare("UPDATE todos SET termine =1 WHERE id = ?");
         $stmt->execute([$id]);
     }
-    
+
+    function ajouterTodo($texte){
+        if ($texte != ""){
+            $stmt = $this->pdo->prepare("INSERT INTO todos VALUES (null, ?, 0, null)");
+            $stmt->execute([$texte]);
+        }
+    }
 }
