@@ -19,6 +19,7 @@
             }
             ?>
             <li class="nav-item"><a href="./about" class="nav-link">À propos</a></li>
+            <li class="nav-item"><a href="./user" class="nav-link">Se connecter</a></li>
         </ul>
     </div>
 </nav>

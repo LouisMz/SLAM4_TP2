@@ -15,7 +15,7 @@ class TodoWeb extends Web
     function liste()
     {
         $this->header(); // Affichage de l'entête.
-        $todos = $this->todoModel->getAll(); // Récupération des TODOS présents en base.
+        $todos = $this->todoModel->voirTodo(); // Récupération des TODOS présents en base.
         include("views/todo/liste.php"); // Affichage de votre vue.
         $this->footer(); // Affichage de votre pied de page.
     }

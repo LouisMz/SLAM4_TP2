@@ -10,6 +10,12 @@ class TodoModel extends SQL
         parent::__construct('todos', 'id');
     }
 
+    function voirTodo(){
+        $stmt = $this->pdo->prepare("SELECT * FROM todos WHERE termine = 0");
+        $stmt->execute();
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     function todoNonTermine()
     {
         $stmt = $this->pdo->prepare("SELECT * FROM todos WHERE termine = 1;");
