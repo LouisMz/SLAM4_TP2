@@ -33,5 +33,9 @@ class TodoWeb extends Web
         $this->redirect("./liste");
     }
     
-
+    function supprimer($id = ''){
+        $this->todoModel->supprimerTodo($id);
+        $this->redirect("./liste");
+    }
+    
 }

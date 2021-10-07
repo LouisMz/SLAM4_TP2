@@ -28,4 +28,9 @@ class TodoModel extends SQL
             $stmt->execute([$texte]);
         }
     }
+
+    function supprimerTodo($id){
+            $stmt = $this->pdo->prepare("DELETE FROM todos WHERE id = ?");
+            $stmt->execute([$id]);
+    }
 }
