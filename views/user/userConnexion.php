@@ -1,11 +1,11 @@
 <div class="container p-3">
     <div class="card">
         <div class="card-body p-2">
-            <form action="./connexion" method="post" class="add">
+            <form action="./userConnexion" method="post" class="add">
                 <div class="input-group">
                     <p>Login</p>
                 </div>
-                <input id="name" name="name" type="text" class="form-control" aria-label="My new idea" aria-describedby="basic-addon1" placeholder="Adresse mail"/>
+                <input id="mail" name="mail" type="text" class="form-control" aria-label="My new idea" aria-describedby="basic-addon1" placeholder="Adresse mail"/>
                 <br>
                 <div class="input-group">
                     <p>Mot de passe</p>
