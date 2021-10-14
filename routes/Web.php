@@ -28,7 +28,7 @@ class Web
 
         $user = new UserWeb();
 
-        Route::Add('/userConnexion', [$user, 'userConnexion']);
+        Route::Add('/userConnexion', [$user, 'connexion']);
 
         //        Exemple de limitation d'accès à une page en fonction de la SESSION.
         //        if (SessionHelpers::isLogin()) {
