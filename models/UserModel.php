@@ -25,6 +25,20 @@ class UserModel extends SQL
             return false;
         }        
     }
+
+    function useRegister($name, $firstname, $mail, $password, $passwordC){
+        if ($password == $passwordC){
+            $stmt = $this->pdo->prepare("INSERT INTO utilisateur VALUES (null, ?, ?, ?, ?)");
+            $stmt->bindParam(1, $name);
+            $stmt->binfParam(2, $firstname);
+            $stmt->bindParam(3, $mail);
+            $stmt->bindParam(4, password_hash($password, PASSWORD_DEFAULT));
+            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"]));
+        }
+        else {
+            SessionHelpers::logout();
+        }
+    }
     
 }
 

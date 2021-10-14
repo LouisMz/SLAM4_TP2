@@ -29,4 +29,11 @@ class UserWeb extends web
         include("views/user/userConnexion.php");
         $this->footer();
     }
+
+    function register()
+    {
+        $this->header();
+        include("views/user/userRegister.php");
+        $this->footer();
+    }
 }

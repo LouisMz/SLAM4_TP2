@@ -21,7 +21,8 @@ class Web
         Route::Add('/', [$main, 'home']);
         Route::Add('/about', [$main, 'about']);
 
-        Route::Add('/userConnexion', [$user, 'connexion']);
+        Route::Add('/user/connexion', [$user, 'connexion']);
+        Route::Add('/user/register', [$user, 'register']);
 
         if (SessionHelpers::isLogin()) {
             Route::Add('/todo/liste', [$todo, 'liste']);

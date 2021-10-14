@@ -18,8 +18,8 @@
                 echo '<li class="nav-item"><a href="/me" class="nav-link">Mon compte</a></li>';
             }
             else{  
-                echo '<li class="nav-item"><a href="../userConnexion" class="nav-link">Se connecter</a></li>'
-                echo '<li class="nav-item"><a href="../userInscription" class="nav-link">S\'inscrire</a></li>'
+                echo '<li class="nav-item"><a href="../user/connexion" class="nav-link">Se connecter</a></li>';
+                echo '<li class="nav-item"><a href="../user/register" class="nav-link">S\'inscrire</a></li>';
             }
             ?>
             <li class="nav-item"><a href="./about" class="nav-link">À propos</a></li>
