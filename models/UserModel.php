@@ -17,7 +17,7 @@ class UserModel extends SQL
         $stmt->execute([$mail]);
         $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if ($inscrit !== false && $_POST['pwd'] == $inscrit['mdp']){
+        if ($inscrit !== false && password_verify($_POST['pwd'], $inscrit['mdp'])){
             SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"]));
             return true;
         }else{
@@ -26,18 +26,37 @@ class UserModel extends SQL
         }        
     }
 
-    function useRegister($name, $firstname, $mail, $password, $passwordC){
-        if ($password == $passwordC){
-            $stmt = $this->pdo->prepare("INSERT INTO utilisateur VALUES (null, ?, ?, ?, ?)");
+    public function register($name, $firstname, $password, $passwordC, $email)
+    {
+        $uppercase = preg_match('@[A-Za-z0-9]@', $password);
+
+        $status = "";
+        $stmt = $this->pdo->prepare("SELECT * FROM inscrit WHERE EMAILINSCRIT=? LIMIT 1");
+        $stmt->execute([$email]);
+        $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+        if($inscrit && $inscrit["EMAILINSCRIT"] == $email){
+            return 0;
+        }
+
+        if(!$uppercase || strlen($password) < 8) {
+            return 2;
+        } 
+
+        if ($password == $passwordC && $status==""){
+            $password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+            $stmt = $this->pdo->prepare("INSERT INTO inscrit VALUES (null, ? ,? ,? ,?)");
             $stmt->bindParam(1, $name);
-            $stmt->binfParam(2, $firstname);
-            $stmt->bindParam(3, $mail);
-            $stmt->bindParam(4, password_hash($password, PASSWORD_DEFAULT));
-            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"]));
+            $stmt->bindParam(2, $firstname);
+            $stmt->bindParam(3, $email);    
+            $stmt->bindParam(4, $password);
+            $stmt->execute();
+            SessionHelpers::login(array("username" => "{$inscrit["NOMINSCRIT"]} {$inscrit["PRENOMINSCRIT"]}", "email" => $inscrit["EMAILINSCRIT"]));
+
+            return 1;
         }
-        else {
-            SessionHelpers::logout();
-        }
+
+        return 4;
     }
     
 }

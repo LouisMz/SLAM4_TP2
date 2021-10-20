@@ -1,7 +1,7 @@
 <div class="container p-3">
     <div class="card">
         <div class="card-body p-2">
-            <form action="./userConnexion" method="post" class="add">
+            <form action="./userRegister" method="post" class="add">
                 <div class="input-group">
                     <p>Nom</p>
                 </div>
