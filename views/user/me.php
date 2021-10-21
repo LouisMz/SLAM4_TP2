@@ -14,7 +14,7 @@ $account = SessionHelpers::getConnected();
 
                 <div class="mt-5">
                     <a class="btn btn-danger d-block full" href="/user/logout">Déconnexion</a>
-                </div>
+                </div>  
             </div>
         </div>
     </div>

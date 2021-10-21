@@ -17,7 +17,7 @@
                         <div class="d-flex">
                             <div class="flex-grow-1 align-self-center"><?= $todo['texte'] ?></div>
                             <div>
-                                <?php 
+                                <?php
                                 if($todo['termine']==0){
                                 ?>
                                 <a href="./terminer?id=<?= $todo['id'] ?>" class="btn btn-outline-success">

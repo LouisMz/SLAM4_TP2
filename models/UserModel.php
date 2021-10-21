@@ -18,7 +18,7 @@ class UserModel extends SQL
         $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
 
         if ($inscrit !== false && password_verify($_POST['pwd'], $inscrit['mdp'])){
-            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"]));
+            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"], "idUti" => "{$inscrit["id"]}"));
             return true;
         }else{
             SessionHelpers::logout();
@@ -51,14 +51,15 @@ class UserModel extends SQL
             $stmt->bindParam(3, $email);    
             $stmt->bindParam(4, $password);
             $stmt->execute();
-            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "mail" => $inscrit["mail"]));
 
+
+            $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE mail = ? LIMIT 1");
+            $stmt->execute([$mail]);
+            $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
+            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "email" => $inscrit["mail"], "idUti" => $inscrit["id"]));
             return 1;
         }
-
         return 4;
     }
     
 }
-
-//password_verify($password, $inscrit['mail'])

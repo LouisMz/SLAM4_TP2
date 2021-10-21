@@ -2,6 +2,7 @@
 namespace models;
 
 use models\base\SQL;
+use utils\SessionHelpers;
 
 class TodoModel extends SQL
 {
@@ -11,8 +12,11 @@ class TodoModel extends SQL
     }
 
     function voirTodo(){
-        $stmt = $this->pdo->prepare("SELECT * FROM todos WHERE termine = 0");
-        $stmt->execute();
+        $account = SessionHelpers::getConnected();
+        var_dump($account['idUti']);
+        $idUti = $account['idUti'];
+        $stmt = $this->pdo->prepare("SELECT * FROM todos INNER JOIN utilisateur ON todos.idUti = utilisateur.id WHERE utilisateur.id = ? AND termine = 0");
+        $stmt->execute([$idUti]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
@@ -29,9 +33,11 @@ class TodoModel extends SQL
     }
 
     function ajouterTodo($texte){
+        $account = SessionHelpers::getConnected();
+        $idUti = $account['idUti'];
         if ($texte != ""){
-            $stmt = $this->pdo->prepare("INSERT INTO todos VALUES (null, ?, 0, null)");
-            $stmt->execute([$texte]);
+            $stmt = $this->pdo->prepare("INSERT INTO todos VALUES (null, ?, 0, null, ?)");
+            $stmt->execute([$texte, $idUti]);
         }
     }
 
