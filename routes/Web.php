@@ -23,12 +23,15 @@ class Web
 
         Route::Add('/user/connexion', [$user, 'connexion']);
         Route::Add('/user/register', [$user, 'register']);
+        Route::Add('/user/logout', [$user, 'logout']);
 
         if (SessionHelpers::isLogin()) {
             Route::Add('/todo/liste', [$todo, 'liste']);
             Route::Add('/todo/ajouter', [$todo, 'ajouter']);
             Route::Add('/todo/terminer', [$todo, 'terminer']);
             Route::Add('/todo/supprimer', [$todo, 'supprimer']);
+
+            Route::Add('/user/me', [$user, 'me']);
         }
 
 

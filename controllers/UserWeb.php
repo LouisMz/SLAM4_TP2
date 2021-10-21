@@ -3,6 +3,7 @@ namespace controllers;
 
 use controllers\base\Web;
 use models\UserModel;
+use utils\SessionHelpers;
 
 class UserWeb extends web
 {
@@ -15,15 +16,15 @@ class UserWeb extends web
 
     function connexion()
     {
-        $error = false;
+        $error = 0;
         if(isset($_POST['mail']) && isset($_POST['pwd'])){
             if($this->userModel->userconnexion($_POST['mail'], $_POST['pwd'])){
                 $this->redirect("/todo/liste");
+            }else{
+                $error = 1;
             }
         }
-        else{
-            $error = true;
-        }
+       
 
         $this->header();
         include("views/user/userConnexion.php");
@@ -34,16 +35,16 @@ class UserWeb extends web
     {
         $error = 1;
         if (isset($_POST['name']) && isset($_POST['pwd'])){
-            if ($this->accountModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['Cpwd'], $_POST['email']) == 1) {
-                $this->redirect("me");
+            if ($this->userModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['pwdC'], $_POST['mail']) == 1) {
+                $this->redirect("/todo/liste");
             }
-            elseif($this->accountModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['Cpwd'], $_POST['email']) == 0){
+            elseif($this->userModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['pwdC'], $_POST['mail']) == 0){
                 $error = 0;
             }
-            elseif($this->accountModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['Cpwd'], $_POST['email']) == 2){
+            elseif($this->userModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['pwdC'], $_POST['mail']) == 2){
                 $error = 2;
             }               
-             elseif($this->accountModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['Cpwd'], $_POST['email']) == 4){
+             elseif($this->userModel->register($_POST['name'], $_POST['firstname'], $_POST['pwd'], $_POST['pwdC'], $_POST['mail']) == 4){
                 $error = 4;
             }
             
@@ -54,5 +55,20 @@ class UserWeb extends web
         include("views/user/UserRegister.php");
         $this->footer();
 
+    }
+
+    function logout()
+    {
+        SessionHelpers::logout();
+        $this->redirect("/user/connexion");
+    }
+
+    // Affiche l'utilisateur actuellement connecté.
+    function me()
+    {
+        $account = 
+        $this->header();
+        include("views/user/me.php");
+        $this->footer();
     }
 }

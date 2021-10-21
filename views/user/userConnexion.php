@@ -1,7 +1,14 @@
 <div class="container p-3">
     <div class="card">
         <div class="card-body p-2">
-            <form action="./user/Connexion" method="post" class="add">
+            <form action="/user/connexion" method="post" class="add">
+            <?php
+                if ($error === 1) {
+                    ?>
+                    <div class="alert alert-danger">Mauvais mot de passe</div>
+                    <?php
+                }
+                ?>
                 <div class="input-group">
                     <p>Login</p>
                 </div>

@@ -13,7 +13,7 @@ class UserModel extends SQL
     }
 
     function userConnexion($mail, $password){
-        $stmt = $this->pdo->prepare("SELECT mail, mdp FROM utilisateur WHERE mail = ? LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE mail = ? LIMIT 1");
         $stmt->execute([$mail]);
         $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
 
@@ -31,11 +31,11 @@ class UserModel extends SQL
         $uppercase = preg_match('@[A-Za-z0-9]@', $password);
 
         $status = "";
-        $stmt = $this->pdo->prepare("SELECT * FROM inscrit WHERE EMAILINSCRIT=? LIMIT 1");
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE mail=? LIMIT 1");
         $stmt->execute([$email]);
         $inscrit = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-        if($inscrit && $inscrit["EMAILINSCRIT"] == $email){
+        if($inscrit && $inscrit["mail"] == $email){
             return 0;
         }
 
@@ -45,13 +45,13 @@ class UserModel extends SQL
 
         if ($password == $passwordC && $status==""){
             $password = password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
-            $stmt = $this->pdo->prepare("INSERT INTO inscrit VALUES (null, ? ,? ,? ,?)");
+            $stmt = $this->pdo->prepare("INSERT INTO utilisateur VALUES (null, ? ,? ,? ,?)");
             $stmt->bindParam(1, $name);
             $stmt->bindParam(2, $firstname);
             $stmt->bindParam(3, $email);    
             $stmt->bindParam(4, $password);
             $stmt->execute();
-            SessionHelpers::login(array("username" => "{$inscrit["NOMINSCRIT"]} {$inscrit["PRENOMINSCRIT"]}", "email" => $inscrit["EMAILINSCRIT"]));
+            SessionHelpers::login(array("username" => "{$inscrit["nom"]} {$inscrit["prenom"]}", "mail" => $inscrit["mail"]));
 
             return 1;
         }

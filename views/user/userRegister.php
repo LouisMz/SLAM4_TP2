@@ -1,7 +1,28 @@
 <div class="container p-3">
     <div class="card">
         <div class="card-body p-2">
-            <form action="./userRegister" method="post" class="add">
+            <form action="./register" method="post" class="add">
+            <?php
+                if ($error === 4) {
+                    ?>
+                    <div class="alert alert-danger">Les mots de passe ne sont pas identiques</div>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($error === 2) {
+                    ?>
+                    <div class="alert alert-danger">Le mot de passe n'est pas comforme. Il faut au minimum: majuscule, minuscule, numéro</div>
+                    <?php
+                }
+                ?>
+                <?php
+                if ($error === 0) {
+                    ?>
+                    <div class="alert alert-danger">Vous possédez déjà un compte, <a href="/user/connexion">Connectez vous</a></div>
+                    <?php
+                }
+            ?>
                 <div class="input-group">
                     <p>Nom</p>
                 </div>
